@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('db_connect.php');
 error_reporting(0);
 
@@ -74,6 +75,11 @@ die;*/
 
         $blood_pressure_sys = $_POST['blood_pressure_sys'];
         $blood_pressure_dys = $_POST['blood_pressure_dys'];
+
+        if ($blood_pressure_sys <= $blood_pressure_dys) {
+            $_SESSION['dys'] = 'dys';
+            header('Location: index.php');
+        }
         $blood_pressure = $blood_pressure_sys . "/" . $blood_pressure_dys;
         if ($blood_pressure_sys <= 120 && $blood_pressure_dys <= 80) {
             $blood_remark = "Normal";

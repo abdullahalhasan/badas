@@ -1,11 +1,17 @@
 <?php
+session_start();
     include('db_connect.php');
     //error_reporting(0);
+    if (isset($_SESSION['dys'])){
+        unset($_SESSION['dys']);
+        echo "<script>alert('Wrong Input')</script>";
+    }
 
     $query_upozila = "SELECT * FROM `upazilas` WHERE 1 ORDER BY name ASC";
     $results_upozila = mysqli_query($db, $query_upozila);
 
     $row_upozila = mysqli_fetch_assoc($results_upozila);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -167,6 +173,7 @@
                     <label for="district" class="col-sm-3 col-form-label">২.৩ উপজেলা</label>
                     <div class="col-sm-3">
                         <select class="form-control" id="dhaka_thana" name="upozila">
+                            <option value="" selected="selected">সিলেক্ট করুন</option>
                             <?php
                             while ($row_upozila = mysqli_fetch_assoc($results_upozila)){
                                 //echo $row['name']."<br>";
@@ -425,7 +432,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="name" class="col-sm-3 col-form-label">১৯. ওজন</label>
+                    <label for="name" class="col-sm-3 col-form-label">১৯. ওজোন</label>
                     <div class="col-sm-3">
                         <input type="number"  maxlength="3" min="30"  max="200" class="form-control" id="weight" name="weight" placeholder="কে.জি." ">
                     </div>
@@ -487,7 +494,7 @@
 
                 <div class="form-group row">
 
-                    <label for="name" class="col-sm-3 col-form-label">২৩. খালি পেটে রক্তে সুগারের মাত্রা</label>
+                    <label for="name" class="col-sm-3 col-form-label">২৩.১ খালি পেটে রক্তে সুগারের মাত্রা</label>
                     <div class="col-sm-3" id="fsb_div" style="visibility: visible">
                         <input type="number" class="form-control" step="0.01" id="fsb_mole" maxlength="3"
                                min="2" max="40" id="sugarLevelEmpty" name="sugarLevelEmpty" placeholder="মিলিমোল/লি" onkeyup="moleFunc()">
@@ -496,7 +503,7 @@
                     </div>
 
 
-                    <label for="age" class="col-sm-3 col-form-label">২৪. ভরা পেটে রক্তে সুগারের মাত্রা (Random)</label>
+                    <label for="age" class="col-sm-3 col-form-label">২৩.২ ভরা পেটে রক্তে সুগারের মাত্রা (Random)</label>
                     <div class="col-sm-3" id="rsb_div" style="visibility: hidden">
                         <input type="number" class="form-control" step="0.01" id="rsb_mole" maxlength="3" min="2" max="40"
                                id="sugarLevelFill" name="sugarLevelFill" placeholder="মিলিমোল/লি" onkeyup="r_moleFunc()">
@@ -506,7 +513,7 @@
 
                 </div>
                 <div class="form-group row">
-                    <label for="age" class="col-sm-3 col-form-label">২৫. চিকিৎসা</label>
+                    <label for="age" class="col-sm-3 col-form-label">২৪. চিকিৎসা</label>
                     <div class="col-sm-3">
                         <select class="form-control" name="medical" id="medical" onchange="medicineFunc()">
                             <option value="1">সিলেক্ট করুন</option>
@@ -526,7 +533,7 @@
                 <br><br>
                 <!--style="visibility: hidden"-->
                 <div class="form-group row" id="insulin1" style="visibility: hidden">
-                    <label for="mobile" class="col-sm-3 col-form-label">২৬.১ ইনসুলিনের (১) নাম</label>
+                    <label for="mobile" class="col-sm-3 col-form-label">২৫.১ ইনসুলিনের (১) নাম</label>
                     <div class="col-sm-2">
                         <!--<input type="text" class="form-control" id="insulinName1" name="insulinName1" placeholder="ইনসুলিনের নাম">-->
                         <select class="form-control" name="insulinName1" id="insulinName1">
@@ -542,7 +549,7 @@
                         </select>
                     </div>
 
-                    <label for="mobile" class="col-sm-4 col-form-label">২৬.৩ ইনসুলিনের (১) সময়</label>
+                    <label for="mobile" class="col-sm-4 col-form-label">২৫.২ ইনসুলিনের (১) সময়</label>
                     <div class="col-sm-3">
                         <div class="form-check form-check-inline">
                             <!--<input class="form-check-input" type="checkbox" name="insulinDozeTime1[]" id="insulinDozeTimeMor1" value="Morning">-->
@@ -578,7 +585,7 @@
                 ?>
                 <!--style="visibility: hidden"-->
                 <div class="form-group row" id="insulin2" style="visibility: hidden">
-                    <label for="mobile" class="col-sm-3 col-form-label">২৭.১ ইনসুলিনের (২) নাম</label>
+                    <label for="mobile" class="col-sm-3 col-form-label">২৬.১ ইনসুলিনের (২) নাম</label>
                     <div class="col-sm-2">
                         <!--<input type="text" class="form-control" id="insulinName2" name="insulinName2" placeholder="ইনসুলিনের নাম">-->
                         <select class="form-control" name="insulinName2" id="insulinName2">
@@ -597,7 +604,7 @@
                     <div class="col-sm-2">
                         <input type="text" class="form-control" id="insulinDoze2" name="insulinDoze2" placeholder=" IU">
                     </div>-->
-                    <label for="mobile" class="col-sm-4 col-form-label">২৭.৩ ইনসুলিনের (২) সময়</label>
+                    <label for="mobile" class="col-sm-4 col-form-label">২৬.২ ইনসুলিনের (২) সময়</label>
                     <div class="col-sm-3">
                         <div class="form-check form-check-inline">
                             <!--<input class="form-check-input" type="checkbox" name="insulinDozeTime2[]" id="insulinDozeTimeMor2" value="Morning">-->
@@ -634,7 +641,7 @@
                 }*/
                 ?>
                 <div class="form-group row" id="medicine1" style="visibility: hidden">
-                    <label for="mobile" class="col-sm-3 col-form-label">২৮.১ ঔষধের (১) নাম</label>
+                    <label for="mobile" class="col-sm-3 col-form-label">২৭.১ ঔষধের (১) নাম</label>
                     <div class="col-sm-2">
                         <!--<input type="text" class="form-control" id="medicineName1" name="medicineName1" placeholder="ঔষধের নাম">-->
                         <select class="form-control" name="medicineName1" id="medicineName1">
@@ -652,7 +659,7 @@
                     <div class="col-sm-2">
                         <input type="text" class="form-control" id="medicineDoze1" name="medicineDoze1" placeholder=" mg">
                     </div>-->
-                    <label for="mobile" class="col-sm-4 col-form-label">২৮.৩ ঔষধের (১) সময়</label>
+                    <label for="mobile" class="col-sm-4 col-form-label">২৭.২ ঔষধের (১) সময়</label>
                     <div class="col-sm-3">
                         <div class="form-check form-check-inline">
                             <!--<input class="form-check-input" type="checkbox" name="medicineDozeTime1[]" id="medicineDozeTimeMor1" value="Morning">-->
@@ -682,7 +689,7 @@
                 }*/
                 ?>
                 <div class="form-group row" id="medicine2" style="visibility: hidden">
-                    <label for="mobile" class="col-sm-3 col-form-label">২৯.১ ঔষধের (২) নাম</label>
+                    <label for="mobile" class="col-sm-3 col-form-label">২৮.১ ঔষধের (২) নাম</label>
                     <div class="col-sm-2">
                         <!--<input type="text" class="form-control" id="medicineName2" name="medicineName2" placeholder="ঔষধের নাম">-->
                         <select class="form-control" name="medicineName2" id="medicineName2">
@@ -700,7 +707,7 @@
                     <div class="col-sm-3">
                         <input type="text" class="form-control" id="medicineDoze2" name="medicineDoze2" placeholder=" mg">
                     </div>-->
-                    <label for="mobile" class="col-sm-4 col-form-label">২৯.৩ ঔষধের (২) সময়</label>
+                    <label for="mobile" class="col-sm-4 col-form-label">২৮.২ ঔষধের (২) সময়</label>
                     <div class="col-sm-3">
                         <div class="form-check form-check-inline">
                             <!--<input class="form-check-input" type="checkbox" name="medicineDozeTime2[]" id="medicineDozeTimeMor2" value="Morning">-->
@@ -730,7 +737,7 @@
                     }*/
                 ?>
                 <div class="form-group row" id="medicine3" style="visibility: hidden">
-                    <label for="mobile" class="col-sm-3 col-form-label">৩০.১ ঔষধের (৩) নাম</label>
+                    <label for="mobile" class="col-sm-3 col-form-label">২৯.১ ঔষধের (৩) নাম</label>
                     <div class="col-sm-2">
                         <!--<input type="text" class="form-control" id="medicineName3" name="medicineName3" placeholder="ঔষধের নাম">-->
                         <select class="form-control" name="medicineName3" id="medicineName3">
@@ -748,7 +755,7 @@
                     <div class="col-sm-2">
                         <input type="text" class="form-control" id="medicineDoze3" name="medicineDoze3" placeholder=" mg">
                     </div>-->
-                    <label for="mobile" class="col-sm-4 col-form-label">৩০.৩ ঔষধের (৩) সময়</label>
+                    <label for="mobile" class="col-sm-4 col-form-label">২৯.২ ঔষধের (৩) সময়</label>
                     <div class="col-sm-3">
                         <div class="form-check form-check-inline">
                             <!--<input class="form-check-input" type="checkbox" name="medicineDozeTime3[]" id="medicineDozeTimeMor3" value="Morning">-->
@@ -1144,11 +1151,18 @@
         var dystolic = document.getElementById("blood_pressure_dys").value;
         if (systolic != 0 ) {
             if(systolic == dystolic) {
-                alert("Can not be same!");
+                alert("Can not be same !");
             }
+
+        }
+        if (parseInt(systolic)<parseInt(dystolic)){
+            alert("Wrong Input !");
         }
 
     }
+
+
+
 
     function sugerSelect() {
 
@@ -1315,16 +1329,34 @@
 
         result1 = ((valueF1*12)+ valueI1);
         var final =result1*2.54;
-        cm1.value = final;
+        if (isNaN(final)) {
+            cm1.value = valueF1*12;
+        } else {
+            cm1.value = final;
+        }
+
     }
     function centimeterFunc() {
+        var cm =0;
         var feet = document.getElementById("heightFeet");
         var inch = document.getElementById("heightInch");
-        var cm = document.getElementById("heightCentemtre");
+        cm = document.getElementById("heightCentemtre");
         var valueC = parseFloat(cm.value);
         valueC = valueC/2.54;
-        feet.value = parseInt(valueC/12);
-        inch.value = parseInt(valueC%12);
+        var vf = parseInt(valueC / 12);
+        var vi = parseInt(valueC % 12);
+        if (isNaN(vf)) {
+            feet.value = 0;
+        } else {
+            feet.value = vf;
+        }
+        if (isNaN(vi)) {
+            inch.value = 0;
+        } else {
+            inch.value = vi;
+        }
+
+
     }
 
     function waistInchFunc() {
