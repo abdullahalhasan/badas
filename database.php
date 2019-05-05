@@ -34,6 +34,8 @@ die;*/
         /*
         echo $insulinName1;
         die;*/
+        $emp_id = $_POST['emp_id'];
+        $form_number = $_POST['form_number'];
         $center = $_POST['center'];
         $division = $_POST['division'];
         $district = $_POST['district'];
@@ -63,25 +65,64 @@ die;*/
         $f = sprintf("%.1f", $bmi);
         $bmi = round($f, 2);
 
+        if ($bmi < 18.5) {
+            $bmi_remarks = "Underweight";
+        } elseif ($bmi >= 18.5 && $bmi <= 22.9) {
+            $bmi_remarks = "Normal weight";
+        } elseif ($bmi >= 23 && $bmi <= 24.9) {
+            $bmi_remarks = "Overweight";
+        } elseif ($bmi >= 25) {
+            $bmi_remarks = "Obese";
+        }
+
+        if ($bmi == 0) {
+            $bmi = "";
+            $bmi_remarks = "";
+        }
+
         $heightFeet = $heightFeet * 12;
         $heightInch = (($heightFeet + $heightInch) * 2.54);
         $f = sprintf("%.1f", $heightInch);
         $heightInch = round($f, 2);
 
-        $wrist = $_POST['wrist'];
-        $wrist = $wrist * 2.54;
+        if ($heightInch == 0) {
+            $heightInch = "";
+        }
+
+        $wrist = $_POST['wristCM'];
+        //$wrist = $wrist * 2.54;
         $f = sprintf("%.1f", $wrist);
         $wrist = round($f, 2);
+
+
+        switch ($gender) {
+            case "Male":
+                if ($wrist < 90) {
+                    $wrist_remarks = "Normal";
+                } elseif ($wrist >= 90) {
+                    $wrist_remarks = "High";
+                }
+                break;
+            case "Female":
+                if ($wrist < 80) {
+                    $wrist_remarks = "Normal";
+                } elseif ($wrist >= 80) {
+                    $wrist_remarks = "High";
+                }
+                break;
+        }
+
+        if ($wrist == 0) {
+            $wrist = "";
+            $wrist_remarks = "";
+        }
+
 
         $blood_pressure_sys = $_POST['blood_pressure_sys'];
         $blood_pressure_dys = $_POST['blood_pressure_dys'];
 
-        if ($blood_pressure_sys <= $blood_pressure_dys) {
-            $_SESSION['dys'] = 'dys';
-            header('Location: index.php');
-        }
         $blood_pressure = $blood_pressure_sys . "/" . $blood_pressure_dys;
-        if ($blood_pressure_sys <= 120 && $blood_pressure_dys <= 80) {
+        if ($blood_pressure_sys <= 140 && $blood_pressure_dys <= 90) {
             $blood_remark = "Normal";
         } else {
             $blood_remark = "High BP";
@@ -103,6 +144,9 @@ die;*/
         } else {
             $sle_remarks = "";
         }
+        if ($sugarLevelEmpty == 0) {
+            $sugarLevelEmpty = "";
+        }
 
         $sugarLevelFill = $_POST['sugarLevelFill'];
 
@@ -116,9 +160,13 @@ die;*/
             $slf_remarks = "";
         }
 
+        if ($sugarLevelFill == 0) {
+            $sugarLevelFill = "";
+        }
+
         $medical = $_POST['medical'];
         if ($medical == "1") {
-            $medical = "0";
+            $medical = "";
         }
 
         // Insulin Starts
@@ -170,6 +218,9 @@ die;*/
             $insulin_count += intval($insulinDozeBed1);
         } if ($insulinDozeBed2 != null) {
             $insulin_count += intval($insulinDozeBed2);
+        }
+        if ($insulin_count == 0) {
+            $insulin_count = "";
         }
 
         /*echo "Class 1:" . $insulinClass1;
@@ -228,8 +279,8 @@ die;*/
             }
         }
 
-        echo "<br>Mor Flag 1: " . $morFlag;
-        echo "<br>Mor Flag 2: " . $morFlag2;
+        /*echo "<br>Mor Flag 1: " . $morFlag;
+        echo "<br>Mor Flag 2: " . $morFlag2;*/
 
 
         //Day Dose
@@ -272,8 +323,8 @@ die;*/
             }
         }
 
-        echo "<br>Day Flag 1: " . $dayFlag;
-        echo "<br>Day Flag 2: " . $dayFlag2;
+        /*echo "<br>Day Flag 1: " . $dayFlag;
+        echo "<br>Day Flag 2: " . $dayFlag2;*/
 
         //Night Dose
         if ($insulinDozeNight1 != null) {
@@ -315,8 +366,8 @@ die;*/
             }
         }
 
-        echo "<br>Night Flag 1: " . $nightFlag;
-        echo "<br>Night Flag 2: " . $nightFlag2;
+        /*echo "<br>Night Flag 1: " . $nightFlag;
+        echo "<br>Night Flag 2: " . $nightFlag2;*/
         //Bed Time Dose
         if ($insulinDozeBed1 != null) {
             switch ($insulinClass1) {
@@ -356,8 +407,8 @@ die;*/
                     break;
             }
         }
-        echo "<br>Bed Flag 1: " . $bedFlag;
-        echo "<br>Bed Flag 2: " . $bedFlag2;
+        /*echo "<br>Bed Flag 1: " . $bedFlag;
+        echo "<br>Bed Flag 2: " . $bedFlag2;*/
 
 
         //Basal-Bolas 1
@@ -543,15 +594,15 @@ die;*/
         //echo $bmi;
         //die;
 
-        $query = "INSERT INTO badas (badas_id, center,division, district,upozila, 
+        $query = "INSERT INTO badas (badas_id,emp_id,form_number,center,division, district,upozila, 
                   full_name, age, gender, 
                   mobile, address, education, 
                   occupation,cigarate, monthly_expense, 
                   physical_exer, vegitable, fruits, 
                   familyDiab, maritial, children_count, 
                   children, weight, heightFeet, 
-                  heightInch,bmi, wrist, 
-                  blood_pressure, blood_remark, 
+                  heightInch,bmi,bmi_remarks, wrist,wrist_remarks, 
+                  blood_pressure_sys,blood_pressure_dys, blood_remark, 
                   sugarLevelEmpty, sle_remarks, 
                   sugarLevelFill, slf_remarks , 
                   medical,
@@ -561,15 +612,15 @@ die;*/
                   medicineName2,medicineBrand2,medicineClass2,medicineDozeMor2,medicineDozeDay2,medicineDozeNight2,
                   medicineName3,medicineBrand3,medicineClass3,medicineDozeMor3,medicineDozeDay3,medicineDozeNight3,medicine_remarks,
                   one, two, three, four, five, six, seven) 
-                  VALUES(null, '$center','$division','$district','$upozila',
+                  VALUES(null, '$emp_id','$form_number','$center','$division','$district','$upozila',
                   '$name','$age','$gender', 
                   '$mobile','$address','$education',
                   '$occupation','$cigarate', '$monthly_expense', 
                   '$physical_exer','$vegitable','$fruits',
                   '$familyDiab', '$maritial', '$children_count',
                   '$children','$weight','$heightFeet', 
-                  '$heightInch','$bmi','$wrist',
-                  '$blood_pressure','$blood_remark',
+                  '$heightInch','$bmi','$bmi_remarks','$wrist','$wrist_remarks',
+                  '$blood_pressure_sys','$blood_pressure_dys','$blood_remark',
                   '$sugarLevelEmpty','$sle_remarks',
                   '$sugarLevelFill','$slf_remarks',
                   '$medical',

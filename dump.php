@@ -20,6 +20,8 @@ $output = '';
                     <tr>  
                         <th class="th-md">#
                         </th>
+                        <th class="th-md">Form Number
+                        </th>
                         <th class="th-md">Centre
                         </th>
                         <th class="th-md">Division
@@ -66,9 +68,15 @@ $output = '';
                         </th>
                         <th class="th-md">BMI
                         </th>
+                        <th class="th-md">BMI Remarks
+                        </th>
                         <th class="th-md">Waist size
                         </th>
-                        <th class="th-md">Blood Pressure
+                        <th class="th-md">Waist size Remarks
+                        </th>
+                        <th class="th-md">Systolic Blood Pressure
+                        </th>
+                        <th class="th-md">Dystolic Blood Pressure
                         </th>
                         <th class="th-md">Remarks
                         </th>
@@ -177,7 +185,8 @@ $output = '';
         {
             $output .= '
                     <tr>  
-                       <td>'.$row["badas_id"].'</td>  
+                       <td>' . $row["badas_id"] . '</td>
+                       <td>' . $row["form_number"] . '</td>  
                        <td>'.$row["center"].'</td>  
                        <td>'.$row["division"].'</td>
                        <td>'.$row["district"].'</td>  
@@ -198,12 +207,14 @@ $output = '';
                        <td>'.$row["maritial"].'</td>  
                        <td>'.$row["children_count"].'</td>  
                        <td>'.$row["children"].'</td>  
-                       
                        <td>'.$row["weight"].'</td>
                        <td>'.$row['heightInch'].'</td>
-                       <td>'.$row["bmi"].'</td>  
-                       <td>'.$row["wrist"].'</td>  
-                       <td>'.$row["blood_pressure"].'</td>  
+                       <td>' . $row["bmi"] . '</td>
+                       <td>' . $row["bmi_remarks"] . '</td>  
+                       <td>' . $row["wrist"] . '</td>
+                       <td>' . $row["wrist_remarks"] . '</td>  
+                       <td>' . $row["blood_pressure_sys"] . '</td>
+                       <td>' . $row["blood_pressure_dys"] . '</td>  
                        <td>'.$row["blood_remark"].'</td> 
                        <td>'.$row["sugarLevelEmpty"].'</td> 
                        <td>'.$row["sle_remarks"].'</td>  

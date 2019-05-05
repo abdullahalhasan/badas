@@ -25,7 +25,12 @@ error_reporting(0);
     </div>
     <br>
     <!--Heading End-->
-
+    <div class="col-md-12"
+    ">
+    <form action="dump.php">
+        <button type="submit" name="asd" class="btn btn-primary">Excel Download</button>
+    </form>
+    </div>
     <!--Table Start-->
     <div class="container-fluid" style="overflow-x:auto;">
         <table class="table table-striped table-bordered table-md" cellspacing="1"
@@ -33,6 +38,8 @@ error_reporting(0);
             <thead>
             <tr>
                 <th class="th-md">#
+                </th>
+                <th class="th-md">Form Number
                 </th>
                 <th class="th-md">Centre
                 </th>
@@ -80,11 +87,17 @@ error_reporting(0);
                 </th>
                 <th class="th-md">BMI
                 </th>
+                <th class="th-md">BMI Remarks
+                </th>
                 <th class="th-md">Waist size
                 </th>
-                <th class="th-md">Blood Pressure
+                <th class="th-md">Waist size Remarks
                 </th>
-                <th class="th-md">Remarks
+                <th class="th-md">Systolic Blood Pressure
+                </th>
+                <th class="th-md">Dystolic Blood Pressure
+                </th>
+                <th class="th-md">Blood Pressure Remarks
                 </th>
                 <th class="th-md">FBG
                 </th>
@@ -197,6 +210,7 @@ error_reporting(0);
                 ?>
                 <tr>
                     <td><?php echo $row['badas_id'] ?></td>
+                    <td><?php echo $row['form_number'] ?></td>
                     <td><?php echo $row['center'] ?></td>
                     <td><?php echo $row['division'] ?></td>
                     <td><?php echo $row['district'] ?></td>
@@ -220,8 +234,11 @@ error_reporting(0);
                     <td><?php echo $row['weight'] ?></td>
                     <td><?php echo /*$row['heightFeet'].",".*/$row['heightInch'] ?></td>
                     <td><?php echo $row['bmi'] ?></td>
+                    <td><?php echo $row['bmi_remarks'] ?></td>
                     <td><?php echo $row['wrist'] ?></td>
-                    <td><?php echo $row['blood_pressure'] ?></td>
+                    <td><?php echo $row['wrist_remarks'] ?></td>
+                    <td><?php echo $row['blood_pressure_sys'] ?></td>
+                    <td><?php echo $row['blood_pressure_dys'] ?></td>
                     <td><?php echo $row['blood_remark'] ?></td>
                     <td><?php echo $row['sugarLevelEmpty'] ?></td>
                     <td><?php echo $row['sle_remarks'] ?></td>

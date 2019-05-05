@@ -2,12 +2,19 @@
 session_start();
     include('db_connect.php');
     //error_reporting(0);
-    if (isset($_SESSION['dys'])){
-        unset($_SESSION['dys']);
-        echo "<script>alert('Wrong Input')</script>";
+
+$sql = "SELECT badas_id FROM badas";
+
+if ($result = mysqli_query($db, $sql)) {
+    // Return the number of rows in result set
+    $rowcount = mysqli_num_rows($result);
+    //echo $rowcount;
+    //printf("Result set has %d rows.\n",$rowcount);
+    // Free result set
     }
 
-    $query_upozila = "SELECT * FROM `upazilas` WHERE 1 ORDER BY name ASC";
+
+$query_upozila = "SELECT * FROM `upazilas` WHERE 1 ORDER BY name ASC";
     $results_upozila = mysqli_query($db, $query_upozila);
 
     $row_upozila = mysqli_fetch_assoc($results_upozila);
@@ -38,7 +45,7 @@ session_start();
     </head><!--/head-->
     <body>
 
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -46,13 +53,13 @@ session_start();
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="image/44.jpg" alt="First slide">
+                    <img class="d-block w-100" src="image/33.jpg" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="image/22.jpg" alt="Second slide">
+                    <img class="d-block w-100" src="image/11.jpg" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="image/55.jpg" alt="Third slide">
+                    <img class="d-block w-100" src="image/22.jpg" alt="Third slide">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -71,13 +78,33 @@ session_start();
             <div class="jumbotron">
                 <h1>সেন্টার ফর গ্লোবাল হেলথ রিসার্চ, বাংলাদেশ ডায়াবেটিক সমিতি</h1>
             </div>
+            <div style="float: right">
+                <p>Total Count: <?php
+                    echo $rowcount;
+                    ?>
+                </p>
+
+            </div>
         </div>
+    <br>
+    <br>
         <br>
         <!--First Form-->
 
 
         <div class="container">
-            <form method="post" action="database.php">
+            <form autocomplete="off" method="post" action="database.php">
+                <div class="form-group row">
+                    <label for="center" class="col-sm-3 col-form-label"> Employee ID</label>
+                    <div class="col-sm-3">
+                        <input type="text" autocomplete="off" class="form-control" name="emp_id">
+                    </div>
+
+                    <label for="center" class="col-sm-3 col-form-label">Form Number</label>
+                    <div class="col-sm-3">
+                        <input type="text" autocomplete="off" class="form-control" name="form_number" required>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label for="center" class="col-sm-3 col-form-label">১. কেন্দ্র</label>
                     <div class="col-sm-3">
@@ -88,14 +115,14 @@ session_start();
                     <div class="col-sm-3">
                         <select class="form-control" id="division" name="division" >
                             <option value="" selected="selected">সিলেক্ট করুন</option>
-                            <option value="Barishal">বরিশাল</option>
-                            <option value="Chittagong">চট্টগ্রাম</option>
-                            <option value="Dhaka">ঢাকা</option>
-                            <option value="Khulna">খুলনা</option>
-                            <option value="Mymensingh">ময়মনসিংহ</option>
-                            <option value="Rajshahi">রাজশাহী</option>
-                            <option value="Rangpur">রংপুর</option>
-                            <option value="Sylhet">সিলেট</option>
+                            <option value="Barishal">1. বরিশাল</option>
+                            <option value="Chittagong">2. চট্টগ্রাম</option>
+                            <option value="Dhaka">3. ঢাকা</option>
+                            <option value="Khulna">4. খুলনা</option>
+                            <option value="Mymensingh">5. ময়মনসিংহ</option>
+                            <option value="Rajshahi">6. রাজশাহী</option>
+                            <option value="Rangpur">7. রংপুর</option>
+                            <option value="Sylhet">8. সিলেট</option>
                         </select>
                     </div>
                 </div>
@@ -180,52 +207,6 @@ session_start();
                                 echo "<option value=".$row_upozila['name'].">".$row_upozila['name']."</option>";
                             }
                             ?>
-                            <!--<option value="" selected="selected">সিলেক্ট করুন</option>
-                            <option value="Adabor">Adabor আদাবর</option>
-                            <option value="Airport">Airport এয়ারপোর্ট</option>
-                            <option value="3">Badda বাড্ডা</option>
-                            <option value="4">Bangshal বংশাল</option>
-                            <option value="5">Cantonment ক্যান্টনমেন্ট</option>
-                            <option value="6">Chalkbazar চকবাজার</option>
-                            <option value="7">Darussalam দারুস সালাম</option>
-                            <option value="8">Demra ডেমরা</option>
-                            <option value="9">Dhanmondi ধানমন্ডি</option>
-                            <option value="10">Dohar দোহার</option>
-                            <option value="11">Dokkhinkhan দক্ষিনখান</option>
-                            <option value="12">Gulshan গুলশান</option>
-                            <option value="13 ">Hazaribagh হাজারিবাগ</option>
-                            <option value="14">Jatrabari যাত্রাবাড়ী</option>
-                            <option value="15">Kadamtoli কদমতলি</option>
-                            <option value="16">Kafrul কাফরুল</option>
-                            <option value="17">Kala Bagan কলাবাগান</option>
-                            <option value="18">Kamrangirchar কামরাংগীর চর</option>
-                            <option value="19">Keraniganj কিরানিগঞ্জ</option>
-                            <option value="20">Khilgaon খিলগাও</option>
-                            <option value="21">Khilkhet খিলক্ষেত</option>
-                            <option value="22">Kotwali Dhaka কোতোয়ালী ঢাকা</option>
-                            <option value="23">Lalbagh লালবাগ</option>
-                            <option value="24">Mirpur মীরপুর</option>
-                            <option value="25">Mohammadpur মোহাম্মাদপুর</option>
-                            <option value="26">>Motijheel মতিঝিল</option>
-                            <option value="27">Mugda মুগদা</option>
-                            <option value="28">Nawabganj Dhk. নবাবগঞ্জ ঢাকা</option>
-                            <option value="29 ">New Market নিউমার্কেট</option>
-                            <option value="30">Pallabi পল্লবী</option>
-                            <option value="31">Ramna রমনা</option>
-                            <option value="32 ">Rampura রামপুরা</option>
-                            <option value="33">Rupnagar রুপনগর</option>
-                            <option value="34">Sabujbagh সবুজবাগ</option>
-                            <option value="35">Shah ali শাহ আলী</option>
-                            <option value="36">Shahbagh শাহবাগ</option>
-                            <option value="37">Sher E Bangla Nagar শের-ই-বাংলানগর</option>
-                            <option value="38">Shyampur শ্যামপুর</option>
-                            <option value="39">Sutrapur সুত্রাপুর</option>
-                            <option value="40">Turag তুরাগ</option>
-                            <option value="41">Uttara উত্তরা</option>
-                            <option value="42">Uttarkhan উত্তরখান</option>
-                            <option value="43">Vasantake ভাসানটেক</option>
-                            <option value="44">Vatara ভাটারা</option>
-                            <option value="45 ">Wari ওয়ারি</option>-->
 
                         </select>
                     </div>
@@ -234,12 +215,14 @@ session_start();
                 <div class="form-group row">
                     <label for="name" class="col-sm-3 col-form-label">৩. নাম</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="নাম">
+                        <input autocomplete="off" type="text" class="form-control" name="name" id="name"
+                               placeholder="নাম">
                     </div>
 
                     <label for="age" class="col-sm-3 col-form-label">৪. বয়স</label>
                     <div class="col-sm-3">
-                        <input type="number" maxlength="3" min="15" max="110" class="form-control" name="age" id="age" placeholder="বয়স">
+                        <input autocomplete="off" type="number" maxlength="3" min="15" max="110" class="form-control"
+                               name="age" id="age" placeholder="বয়স">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -261,7 +244,8 @@ session_start();
 
                     <label for="mobile" class="col-sm-3 col-form-label">৬. মোবাইল নাম্বার</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" maxlength="11" name="mobile" id="mobile" placeholder="মোবাইল নাম্বার" >
+                        <input autocomplete="off" type="text" class="form-control" maxlength="11" name="mobile"
+                               id="mobile" placeholder="মোবাইল নাম্বার">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -281,11 +265,11 @@ session_start();
                     <div class="col-sm-3">
                         <select class="form-control" name="education">
                             <option value="">সিলেক্ট করুন</option>
-                            <option value="Illiterate">নিরক্ষর</option>
-                            <option value="Primary School">প্রাথমিক বিদ্যালয়</option>
-                            <option value="Secondary School">মাধ্যমিক বিদ্যালয়</option>
-                            <option value="College">কলেজ</option>
-                            <option value="Higher Education">উচ্চতর শিক্ষা</option>
+                            <option value="Illiterate">1. নিরক্ষর</option>
+                            <option value="Primary School">2. প্রাথমিক বিদ্যালয়</option>
+                            <option value="Secondary School">3. মাধ্যমিক বিদ্যালয়</option>
+                            <option value="College">4. কলেজ</option>
+                            <option value="Higher Education">5. উচ্চতর শিক্ষা</option>
                         </select>
                     </div>
                 </div>
@@ -295,15 +279,15 @@ session_start();
                     <div class="col-sm-3">
                         <select class="form-control" name="occupation">
                             <option value="">সিলেক্ট করুন</option>
-                            <option value="Job Holder">চাকুরীজীবী</option>
-                            <option value="Businessman">ব্যবসায়ী</option>
-                            <option value="Maid">গৃহকর্মী</option>
-                            <option value="Housewife">গৃহিণী</option>
-                            <option value="Student">ছাত্র</option>
-                            <option value="Retired">অবসরপ্রাপ্ত</option>
-                            <option value="Farmer">কৃষক</option>
-                            <option value="Unemployed">বেকার</option>
-                            <option value="Other">অন্যান্য</option>
+                            <option value="Job Holder">1. চাকুরীজীবী</option>
+                            <option value="Businessman">2. ব্যবসায়ী</option>
+                            <option value="Maid">3. গৃহকর্মী</option>
+                            <option value="Housewife">4. গৃহিণী</option>
+                            <option value="Student">5. ছাত্র</option>
+                            <option value="Retired">6. অবসরপ্রাপ্ত</option>
+                            <option value="Farmer">7. কৃষক</option>
+                            <option value="Unemployed">8 বেকার</option>
+                            <option value="Other">9. অন্যান্য</option>
                         </select>
                     </div>
 
@@ -324,9 +308,9 @@ session_start();
                     <div class="col-sm-3">
                         <select class="form-control" name="monthly_expense">
                             <option value="">সিলেক্ট করুন</option>
-                            <option value="Below 10,000 TK">১০,০০০ টাকার কম</option>
-                            <option value="10,000 TK - 20,000 TK">১০,০০০ টাকা - ২০,০০০ টাকা</option>
-                            <option value="Above 20,000 TK">২০,০০০ টাকার বেশি</option>
+                            <option value="Below 10,000 TK">1. ১০,০০০ টাকার কম</option>
+                            <option value="10,000 TK - 20,000 TK">2. ১০,০০০ টাকা - ২০,০০০ টাকা</option>
+                            <option value="Above 20,000 TK">3. ২০,০০০ টাকার বেশি</option>
                         </select>
                     </div>
 
@@ -335,10 +319,10 @@ session_start();
 
                         <select class="form-control" name="physical_exer">
                             <option value="">সিলেক্ট করুন</option>
-                            <option value=">30">৩০ মিনিটের কম হাঁটা</option>
-                            <option value="30-60">৩০ থেকে ৬০ মিনিট হাঁটা</option>
-                            <option value="60>">৬০ মিনিটের বেশি হাঁটা</option>
-                            <option value="0">না</option>
+                            <option value="<30">1. ৩০ মিনিটের কম হাঁটা</option>
+                            <option value="30-60">2. ৩০ থেকে ৬০ মিনিট হাঁটা</option>
+                            <option value="60>">3. ৬০ মিনিটের বেশি হাঁটা</option>
+                            <option value="0">4. না</option>
                         </select>
                     </div>
                 </div>
@@ -349,13 +333,13 @@ session_start();
 
                         <select class="form-control" name="vegitable">
                             <option value="">সিলেক্ট করুন</option>
-                            <option value="1">১ দিন</option>
-                            <option value="2">২ দিন</option>
-                            <option value="3">৩ দিন</option>
-                            <option value="4">৪ দিন</option>
-                            <option value="5">৫ দিন</option>
-                            <option value="6">৬ দিন</option>
-                            <option value="7">৭ দিন</option>
+                            <option value="1">1 দিন</option>
+                            <option value="2">2 দিন</option>
+                            <option value="3">3 দিন</option>
+                            <option value="4">4 দিন</option>
+                            <option value="5">5 দিন</option>
+                            <option value="6">6 দিন</option>
+                            <option value="7">7 দিন</option>
                             <option value="0">না</option>
                         </select>
                     </div>
@@ -365,13 +349,13 @@ session_start();
                         <!--<input type="text" class="form-control" id="mobile" name="fruits" placeholder=" ... দিন">-->
                         <select class="form-control" name="fruits">
                             <option value="">সিলেক্ট করুন</option>
-                            <option value="1">১ দিন</option>
-                            <option value="2">২ দিন</option>
-                            <option value="3">৩ দিন</option>
-                            <option value="4">৪ দিন</option>
-                            <option value="5">৫ দিন</option>
-                            <option value="6">৬ দিন</option>
-                            <option value="7">৭ দিন</option>
+                            <option value="1">1 দিন</option>
+                            <option value="2">2 দিন</option>
+                            <option value="3">3 দিন</option>
+                            <option value="4">4 দিন</option>
+                            <option value="5">5 দিন</option>
+                            <option value="6">6 দিন</option>
+                            <option value="7">7 দিন</option>
                             <option value="0">না</option>
                         </select>
                     </div>
@@ -451,10 +435,12 @@ session_start();
                 <div class="form-group row">
                     <label for="gender" class="col-sm-3 col-form-label">২১. কোমরের মাপ</label>
                     <div class="col-sm-1">
-                        <input type="number" step="0.01" maxlength="2" min="20" max="50" class="form-control" id="waistInch" name="wrist" placeholder="ইঞ্চি" onkeyup="waistInchFunc()">
+                        <input type="number" step="0.01" maxlength="2" class="form-control" id="waistInch" name="wrist"
+                               placeholder="ইঞ্চি" onkeyup="waistInchFunc()">
                     </div>
                     <div class="col-sm-2">
-                        <input type="number" step="0.01" maxlength="3" min="20" max="500" class="form-control" id="waistCm" name="wrist" placeholder="সেন্টিমিটার" onkeyup="waistCmFunc()">
+                        <input type="number" step="0.01" maxlength="3" class="form-control" id="waistCm" name="wristCM"
+                               placeholder="সেন্টিমিটার" onkeyup="waistCmFunc()">
                     </div>
 
                     <label for="mobile" class="col-sm-2 col-form-label">২২. রক্তচাপ</label>
@@ -497,7 +483,8 @@ session_start();
                     <label for="name" class="col-sm-3 col-form-label">২৩.১ খালি পেটে রক্তে সুগারের মাত্রা</label>
                     <div class="col-sm-3" id="fsb_div" style="visibility: visible">
                         <input type="number" class="form-control" step="0.01" id="fsb_mole" maxlength="3"
-                               min="2" max="40" id="sugarLevelEmpty" name="sugarLevelEmpty" placeholder="মিলিমোল/লি" onkeyup="moleFunc()">
+                               max="40" id="sugarLevelEmpty" name="sugarLevelEmpty" placeholder="মিলিমোল/লি"
+                               onkeyup="moleFunc()">
                         <input type="number" class="form-control" step="0.01" id="fsb_gram" maxlength="4"
                                id="sugarLevelFillMG" name="sugarLevelFillMG" placeholder="মিলিগ্রাম" onkeyup="gramFunc()">
                     </div>
@@ -505,7 +492,7 @@ session_start();
 
                     <label for="age" class="col-sm-3 col-form-label">২৩.২ ভরা পেটে রক্তে সুগারের মাত্রা (Random)</label>
                     <div class="col-sm-3" id="rsb_div" style="visibility: hidden">
-                        <input type="number" class="form-control" step="0.01" id="rsb_mole" maxlength="3" min="2" max="40"
+                        <input type="number" class="form-control" step="0.01" id="rsb_mole" maxlength="3" max="40"
                                id="sugarLevelFill" name="sugarLevelFill" placeholder="মিলিমোল/লি" onkeyup="r_moleFunc()">
                         <input type="number" class="form-control" step="0.01" id="rsb_gram" maxlength="4"
                                id="sugarLevelFillMG" name="sugarLevelFillMG" placeholder="মিলিগ্রাম" onkeyup="r_gramFunc()">
@@ -1364,6 +1351,7 @@ session_start();
         var wCm = document.getElementById("waistCm");
         var wvalueI = wInch.value;
         var resultCm =wvalueI*2.54;
+        resultCm = Number((resultCm).toFixed(2))
         wCm.value = resultCm;
     }
 
@@ -1372,6 +1360,7 @@ session_start();
         var wCm = document.getElementById("waistCm");
         var wvalueC = wCm.value;
         var resultInch = wvalueC /2.54;
+        resultInch = Number((resultInch).toFixed(2))
         wInch.value = resultInch;
     }
     //-->
